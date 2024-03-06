@@ -1,0 +1,40 @@
+ARG ARCH=amd64
+FROM ${ARCH}/ubuntu:jammy-20240212
+
+RUN cd ~; \
+	export DEBIAN_FRONTEND='noninteractive'; \
+	apt-get update; \
+	apt-get install -y --no-install-recommends apt-utils locales ca-certificates; \
+    apt-get install -y --no-install-recommends less nano mc wget curl sudo python3 pip git ffmpeg; \
+	apt-get clean all; \
+    mkdir -p /data/home; \
+    groupadd -g 1000 user; \
+    useradd -g user -u 1000 -m -d /data/home user; \
+	ln -snf /usr/share/zoneinfo/UTC /etc/localtime; \
+	echo "UTC" > /etc/timezone; \
+	locale-gen en_US en_US.UTF-8 ru_RU.UTF-8; \
+	update-locale LANG=en_US.utf8 LANGUAGE=en_US:en; \
+	echo "LANG="en_US.utf8" \n\
+LANGUAGE="en_US:en" \n\
+export LANG \n\
+export LANGUAGE\n" >> /etc/bash.bashrc; \
+	echo 'Ok'
+
+RUN cd ~; \
+    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu; \
+    rm -rf /root/.cache/pip; \
+    echo 'Ok'
+
+RUN cd ~; \
+	pip3 install git+https://github.com/openai/whisper.git; \
+	rm -rf /root/.cache/pip; \
+    echo 'Ok'
+
+RUN cd ~; \
+	mkdir -p /data/home/.cache/whisper; \
+	curl -s -o "/data/home/.cache/whisper/base.pt" "https://openaipublic.azureedge.net/main/whisper/models/ed3a0b6b1c0edf879ad9b11b1af5a0e6ab5db9205f891f668f8b0e6c6326e34e/base.pt"; \
+	curl -s -o "/data/home/.cache/whisper/small.pt" "https://openaipublic.azureedge.net/main/whisper/models/9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794/small.pt"; \
+	echo 'Ok'
+
+ADD files /
+ENTRYPOINT ["/root/run.sh"]
