@@ -9,7 +9,7 @@ docker pull bayrell/whisper:v20231117
 
 Run docker:
 ```
-docker run -it --rm ./:/shared bayrell/whisper:v20231117 bash
+docker run -it --rm -v whisper:/data -v ./:/shared bayrell/whisper:v20231117 bash
 ```
 
 ## Nvidia CUDA
@@ -21,7 +21,7 @@ docker pull bayrell/whisper:v20231117-cuda
 
 Run docker:
 ```
-docker run -it --rm --gpus all -v ./:/shared bayrell/whisper:v20231117-cuda bash
+docker run -it --rm --gpus all -v whisper:/data -v ./:/shared bayrell/whisper:v20231117-cuda bash
 ```
 
 ## Usage

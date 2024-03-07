@@ -46,13 +46,33 @@ case "$1" in
 		docker push bayrell/$IMAGE:$VERSION-cuda
 	;;
 
+	upload-github)
+		docker tag bayrell/$IMAGE:$VERSION-$SUBVERSION \
+			ghcr.io/bayrell-os/$IMAGE:$VERSION-$SUBVERSION
+		
+		docker tag bayrell/$IMAGE:$VERSION-$SUBVERSION-cuda \
+			ghcr.io/bayrell-os/$IMAGE:$VERSION-$SUBVERSION-cuda
+
+		docker push ghcr.io/bayrell-os/$IMAGE:$VERSION-$SUBVERSION
+		docker push ghcr.io/bayrell-os/$IMAGE:$VERSION-$SUBVERSION-cuda
+
+		docker tag bayrell/$IMAGE:$VERSION \
+			ghcr.io/bayrell-os/$IMAGE:$VERSION
+		
+		docker tag bayrell/$IMAGE:$VERSION-cuda \
+			ghcr.io/bayrell-os/$IMAGE:$VERSION-cuda
+
+		docker push ghcr.io/bayrell-os/$IMAGE:$VERSION
+		docker push ghcr.io/bayrell-os/$IMAGE:$VERSION-cuda
+	;;
+
 	all)
 		$0 amd64
 		$0 amd64-cuda
 	;;
 	
 	*)
-		echo "Usage: $0 {test|amd64|all}"
+		echo "Usage: $0 {amd64|amd64-cuda|all}"
 		RETVAL=1
 
 esac

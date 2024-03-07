@@ -31,9 +31,9 @@ RUN cd ~; \
     echo 'Ok'
 
 RUN cd ~; \
-	mkdir -p /data/home/.cache/whisper; \
-	curl -s -o "/data/home/.cache/whisper/base.pt" "https://openaipublic.azureedge.net/main/whisper/models/ed3a0b6b1c0edf879ad9b11b1af5a0e6ab5db9205f891f668f8b0e6c6326e34e/base.pt"; \
-	curl -s -o "/data/home/.cache/whisper/small.pt" "https://openaipublic.azureedge.net/main/whisper/models/9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794/small.pt"; \
+	mkdir -p /src/whisper; \
+	curl -s -o "/src/whisper/base.pt" "https://openaipublic.azureedge.net/main/whisper/models/ed3a0b6b1c0edf879ad9b11b1af5a0e6ab5db9205f891f668f8b0e6c6326e34e/base.pt"; \
+	curl -s -o "/src/whisper/small.pt" "https://openaipublic.azureedge.net/main/whisper/models/9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794/small.pt"; \
 	echo 'Ok'
 
 ADD files /
